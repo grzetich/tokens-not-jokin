@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tokens Not Jokin' — How API Documentation Format Affects AI Coding Tool Costs</title>
+    <meta name="description" content="Based on 12,000 integration tests across 5 AI models. The format of your API docs is costing you more than you think.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --ink: #0a0a0a;
+            --paper: #f6f1eb;
+            --cream: #ede6dc;
+            --accent: #c44b1a;
+            --accent-light: #e8693a;
+            --muted: #7a7168;
+            --rule: #c9bfb3;
+            --code-bg: #1a1a1a;
+            --code-fg: #e8dfd5;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html {
+            font-size: 18px;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--paper);
+            color: var(--ink);
+            line-height: 1.65;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* ---- HEADER / HERO ---- */
+        header {
+            padding: 4rem 0 3rem;
+            border-bottom: 3px solid var(--ink);
+        }
+
+        .edition-line {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.7rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .edition-line .dot {
+            width: 4px;
+            height: 4px;
+            background: var(--accent);
+            border-radius: 50%;
+            display: inline-block;
+            margin: 0 0.75rem;
+        }
+
+        h1 {
+            font-family: 'Instrument Serif', serif;
+            font-size: clamp(3rem, 8vw, 5rem);
+            line-height: 0.95;
+            letter-spacing: -0.03em;
+            margin-bottom: 1.5rem;
+            font-weight: 400;
+        }
+
+        h1 .highlight {
+            color: var(--accent);
+            font-style: italic;
+        }
+
+        .subtitle {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 1.15rem;
+            line-height: 1.5;
+            color: var(--muted);
+            max-width: 540px;
+            margin-bottom: 2rem;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 1px;
+            flex-wrap: wrap;
+        }
+
+        .hero-stat {
+            display: inline-flex;
+            align-items: baseline;
+            gap: 0.5rem;
+            background: var(--ink);
+            color: var(--paper);
+            padding: 0.6rem 1.2rem;
+            font-family: 'DM Mono', monospace;
+            font-size: 0.78rem;
+            letter-spacing: 0.02em;
+        }
+
+        .hero-stat .num {
+            font-size: 1.4rem;
+            font-weight: 500;
+            color: var(--accent-light);
+        }
+
+        /* ---- SECTIONS ---- */
+        section {
+            padding: 3.5rem 0;
+            border-bottom: 1px solid var(--rule);
+        }
+
+        .section-label {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.65rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 1.5rem;
+        }
+
+        h2 {
+            font-family: 'Instrument Serif', serif;
+            font-size: 2rem;
+            font-weight: 400;
+            margin-bottom: 1rem;
+            letter-spacing: -0.02em;
+        }
+
+        /* ---- THE PROBLEM ---- */
+        .problem-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1px;
+            background: var(--rule);
+            margin: 2rem 0;
+        }
+
+        .problem-cell {
+            background: var(--paper);
+            padding: 1.5rem;
+        }
+
+        .problem-cell .label {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.65rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 0.5rem;
+        }
+
+        .problem-cell .value {
+            font-family: 'Instrument Serif', serif;
+            font-size: 1.8rem;
+            line-height: 1.1;
+        }
+
+        .problem-cell .note {
+            font-size: 0.8rem;
+            color: var(--muted);
+            margin-top: 0.4rem;
+        }
+
+        .problem-cell.full {
+            grid-column: 1 / -1;
+        }
+
+        /* ---- QUESTIONS ---- */
+        .questions-list {
+            margin: 1.5rem 0;
+        }
+
+        .question-item {
+            padding: 1rem 0;
+            border-bottom: 1px dotted var(--rule);
+            font-family: 'Instrument Serif', serif;
+            font-size: 1.2rem;
+            font-style: italic;
+            color: var(--ink);
+            display: flex;
+            align-items: baseline;
+            gap: 1rem;
+        }
+
+        .question-item::before {
+            content: '?';
+            font-family: 'DM Mono', monospace;
+            font-size: 0.8rem;
+            font-style: normal;
+            color: var(--accent);
+            flex-shrink: 0;
+        }
+
+        .question-answer {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.85rem;
+            font-style: normal;
+            color: var(--muted);
+            margin-top: 0.4rem;
+            line-height: 1.5;
+        }
+
+        /* ---- METHODOLOGY ---- */
+        .method-steps {
+            margin: 1.5rem 0;
+            counter-reset: steps;
+        }
+
+        .method-step {
+            counter-increment: steps;
+            display: grid;
+            grid-template-columns: 2.5rem 1fr;
+            gap: 0.75rem;
+            padding: 1.25rem 0;
+            border-bottom: 1px dotted var(--rule);
+        }
+
+        .method-step::before {
+            content: counter(steps);
+            font-family: 'Instrument Serif', serif;
+            font-size: 1.8rem;
+            color: var(--rule);
+            line-height: 1;
+        }
+
+        .method-step h3 {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.8rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--accent);
+            margin-bottom: 0.3rem;
+        }
+
+        .method-step p {
+            font-size: 0.9rem;
+            color: var(--muted);
+            line-height: 1.55;
+        }
+
+        /* ---- WHAT'S INSIDE ---- */
+        .parts-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .part-card {
+            background: var(--cream);
+            padding: 1.5rem;
+            position: relative;
+        }
+
+        .part-card.full {
+            grid-column: 1 / -1;
+        }
+
+        .part-card .part-num {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.6rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .part-card h3 {
+            font-family: 'Instrument Serif', serif;
+            font-size: 1.25rem;
+            font-weight: 400;
+            margin-bottom: 0.4rem;
+        }
+
+        .part-card p {
+            font-size: 0.82rem;
+            color: var(--muted);
+            line-height: 1.55;
+        }
+
+        .part-card .chapters {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.65rem;
+            color: var(--rule);
+            margin-top: 0.75rem;
+        }
+
+        /* ---- TOOL CTA ---- */
+        .tool-section .terminal {
+            background: var(--code-bg);
+            color: var(--code-fg);
+            padding: 2rem;
+            font-family: 'DM Mono', monospace;
+            font-size: 0.8rem;
+            text-align: left;
+            margin: 1.5rem 0;
+            line-height: 1.8;
+            overflow-x: auto;
+        }
+
+        .terminal .prompt { color: var(--accent-light); }
+        .terminal .comment { color: #555; }
+        .terminal .dim { color: #666; }
+        .terminal .bright { color: #e8dfd5; }
+        .terminal .green { color: #4ade80; }
+        .terminal .yellow { color: #fbbf24; }
+        .terminal .red { color: #f87171; }
+
+        .tool-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--accent);
+            font-family: 'DM Mono', monospace;
+            font-size: 0.85rem;
+            text-decoration: none;
+            border-bottom: 1px solid var(--accent);
+            padding-bottom: 2px;
+            transition: gap 0.2s ease;
+        }
+
+        .tool-link:hover { gap: 0.75rem; }
+
+        /* ---- AUTHOR ---- */
+        .author-name {
+            font-family: 'Instrument Serif', serif;
+            font-size: 1.4rem;
+            font-weight: 400;
+        }
+
+        .author-bio {
+            font-size: 0.9rem;
+            color: var(--muted);
+            line-height: 1.65;
+            margin-top: 0.75rem;
+        }
+
+        .author-links {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+
+        .author-links a {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.7rem;
+            color: var(--muted);
+            text-decoration: none;
+            letter-spacing: 0.05em;
+            border-bottom: 1px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .author-links a:hover {
+            color: var(--accent);
+            border-bottom-color: var(--accent);
+        }
+
+        /* ---- CTA / BUY ---- */
+        .buy-section {
+            padding: 4rem 0;
+            text-align: center;
+            border-bottom: none;
+        }
+
+        .buy-section .price-note {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--muted);
+            margin-bottom: 2rem;
+        }
+
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            background: var(--accent);
+            color: var(--paper);
+            padding: 1rem 2.5rem;
+            font-family: 'DM Mono', monospace;
+            font-size: 0.85rem;
+            font-weight: 500;
+            letter-spacing: 0.05em;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            transition: all 0.25s ease;
+        }
+
+        .btn-primary:hover {
+            background: var(--ink);
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: transparent;
+            color: var(--ink);
+            padding: 0.85rem 2rem;
+            font-family: 'DM Mono', monospace;
+            font-size: 0.8rem;
+            letter-spacing: 0.05em;
+            text-decoration: none;
+            border: 2px solid var(--ink);
+            cursor: pointer;
+            transition: all 0.25s ease;
+        }
+
+        .btn-secondary:hover {
+            background: var(--ink);
+            color: var(--paper);
+        }
+
+        .buy-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .buy-note {
+            font-size: 0.8rem;
+            color: var(--muted);
+            max-width: 460px;
+            margin: 0 auto;
+        }
+
+        /* ---- EMAIL SIGNUP ---- */
+        .email-section {
+            background: var(--ink);
+            color: var(--paper);
+            padding: 3rem 0;
+            border-bottom: none;
+        }
+
+        .email-section .container { text-align: center; }
+
+        .email-section h2 {
+            color: var(--paper);
+            margin-bottom: 0.5rem;
+        }
+
+        .email-section p {
+            color: var(--rule);
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .email-form {
+            display: flex;
+            gap: 0;
+            max-width: 460px;
+            margin: 0 auto;
+        }
+
+        .email-form input[type="email"] {
+            flex: 1;
+            padding: 0.85rem 1.2rem;
+            font-family: 'DM Mono', monospace;
+            font-size: 0.8rem;
+            border: 2px solid var(--muted);
+            background: transparent;
+            color: var(--paper);
+            outline: none;
+        }
+
+        .email-form input[type="email"]::placeholder { color: var(--muted); }
+        .email-form input[type="email"]:focus { border-color: var(--accent-light); }
+
+        .email-form button {
+            padding: 0.85rem 1.5rem;
+            background: var(--accent);
+            color: var(--paper);
+            border: 2px solid var(--accent);
+            font-family: 'DM Mono', monospace;
+            font-size: 0.8rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .email-form button:hover {
+            background: var(--accent-light);
+            border-color: var(--accent-light);
+        }
+
+        /* ---- ENDORSEMENTS (future) ---- */
+        .endorsements {
+            padding: 3.5rem 0;
+            border-bottom: 1px solid var(--rule);
+        }
+
+        .endorsement {
+            padding: 1.5rem 0;
+            border-bottom: 1px dotted var(--rule);
+        }
+
+        .endorsement:last-child { border-bottom: none; }
+
+        .endorsement blockquote {
+            font-family: 'Instrument Serif', serif;
+            font-size: 1.1rem;
+            font-style: italic;
+            line-height: 1.5;
+            margin-bottom: 0.5rem;
+        }
+
+        .endorsement cite {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.7rem;
+            font-style: normal;
+            color: var(--muted);
+            letter-spacing: 0.03em;
+        }
+
+        /* ---- FOOTER ---- */
+        footer {
+            padding: 2.5rem 0;
+            text-align: center;
+        }
+
+        footer p {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.65rem;
+            color: var(--muted);
+            letter-spacing: 0.05em;
+        }
+
+        /* ---- RESPONSIVE ---- */
+        @media (max-width: 600px) {
+            html { font-size: 16px; }
+            .container { padding: 0 1.25rem; }
+            header { padding: 2.5rem 0 2rem; }
+            .hero-stats { flex-direction: column; }
+            .problem-grid { grid-template-columns: 1fr; }
+            .parts-grid { grid-template-columns: 1fr; }
+            .buy-buttons { flex-direction: column; align-items: center; }
+            .email-form { flex-direction: column; }
+        }
+
+        /* ---- ANIMATIONS ---- */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(16px);
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="container">
+        <div class="edition-line">
+            <span>Ed Grzetich</span>
+            <span><span class="dot"></span> Original Research <span class="dot"></span></span>
+            <span>2026</span>
+        </div>
+        <h1>Tokens Not <span class="highlight">Jokin'</span></h1>
+        <p class="subtitle">Every time an AI coding tool reads your API docs, it costs tokens. But does the format of those docs matter? We ran 12,000 integration tests across 5 AI models to find out.</p>
+        <div class="hero-stats">
+            <div class="hero-stat">
+                <span class="num">12,000</span> integration tests
+            </div>
+            <div class="hero-stat">
+                <span class="num">5</span> AI models tested
+            </div>
+            <div class="hero-stat">
+                <span class="num">5</span> doc formats compared
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- THE PROBLEM -->
+<section>
+    <div class="container fade-in">
+        <div class="section-label">The Problem</div>
+        <h2>Your docs have two audiences now</h2>
+        <p style="color: var(--muted); font-size: 0.95rem; margin-bottom: 0.5rem;">Developers still read your API docs. But increasingly, AI coding tools read them first. Every token your documentation consumes is a token that can't be used for reasoning, code generation, or context about the user's project.</p>
+
+        <div class="problem-grid">
+            <div class="problem-cell">
+                <div class="label">The question</div>
+                <div class="value">How much?</div>
+                <div class="note">Does format affect token cost? And if so, by how much?</div>
+            </div>
+            <div class="problem-cell">
+                <div class="label">Who's affected</div>
+                <div class="value">Everyone</div>
+                <div class="note">Any API whose docs are consumed by AI coding tools</div>
+            </div>
+            <div class="problem-cell full">
+                <div class="label">What nobody's measuring</div>
+                <div class="value">The cost of format</div>
+                <div class="note">Teams measure doc readability and completeness. Almost nobody measures token efficiency or AI comprehension rates by format. This book changes that.</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- WHAT THE BOOK ANSWERS -->
+<section>
+    <div class="container fade-in">
+        <div class="section-label">What the Book Answers</div>
+        <h2>The questions we tested</h2>
+
+        <div class="questions-list">
+            <div class="question-item">
+                Which documentation format is most token-efficient for AI consumption?
+                <div class="question-answer">We tested 5 formats head-to-head. The results are in the book.</div>
+            </div>
+            <div class="question-item">
+                Does format affect AI code generation quality, or just cost?
+                <div class="question-answer">We measured both. The answer has implications for how you build docs.</div>
+            </div>
+            <div class="question-item">
+                Do bigger AI models handle all formats equally?
+                <div class="question-answer">We tested across model sizes from 7B to 200B+ parameters.</div>
+            </div>
+            <div class="question-item">
+                Can you serve both humans and AI from a single doc source?
+                <div class="question-answer">The book includes a complete single-source, dual-output architecture.</div>
+            </div>
+            <div class="question-item">
+                How do you test your own docs for AI readiness?
+                <div class="question-answer">Full testing toolkit and methodology included in the appendices.</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- METHODOLOGY -->
+<section>
+    <div class="container fade-in">
+        <div class="section-label">The Research</div>
+        <h2>Not opinions. Tests.</h2>
+
+        <div class="method-steps">
+            <div class="method-step">
+                <div>
+                    <h3>Built a clean test API</h3>
+                    <p>Every popular API is in LLM training data. Testing with Stripe's docs means you're measuring memorization, not comprehension. We built a custom API from scratch to eliminate contamination.</p>
+                </div>
+            </div>
+            <div class="method-step">
+                <div>
+                    <h3>Same API, five formats</h3>
+                    <p>Identical information documented in five different formats. Same endpoints, same parameters, same constraints. The only variable is how it's structured.</p>
+                </div>
+            </div>
+            <div class="method-step">
+                <div>
+                    <h3>Tested across model sizes</h3>
+                    <p>From 7B parameter models to 200B+. Format preferences change with model capability, and the patterns aren't what you'd predict.</p>
+                </div>
+            </div>
+            <div class="method-step">
+                <div>
+                    <h3>Measured what matters</h3>
+                    <p>Token efficiency, code generation pass rates, error handling quality, and overall accuracy. Not just "does it work" but "how well, at what cost."</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- WHAT'S INSIDE -->
+<section>
+    <div class="container fade-in">
+        <div class="section-label">What's Inside</div>
+        <h2>Research, framework, implementation</h2>
+
+        <div class="parts-grid">
+            <div class="part-card">
+                <div class="part-num">Part I</div>
+                <h3>No Joke</h3>
+                <p>The problem nobody's measuring. Why your doc format creates a hidden tax on every AI interaction with your API.</p>
+                <div class="chapters">3 chapters</div>
+            </div>
+            <div class="part-card">
+                <div class="part-num">Part II</div>
+                <h3>The Tests Don't Lie</h3>
+                <p>12,000 integration tests. 5 formats. 5 models. The complete results, with data on token efficiency, code generation quality, and error handling.</p>
+                <div class="chapters">5 chapters</div>
+            </div>
+            <div class="part-card">
+                <div class="part-num">Part III</div>
+                <h3>Dead Serious</h3>
+                <p>The decision framework. How to choose the right format for your team, test your own docs, and optimize without rewriting everything.</p>
+                <div class="chapters">3 chapters</div>
+            </div>
+            <div class="part-card">
+                <div class="part-num">Part IV</div>
+                <h3>The Build</h3>
+                <p>Single source, dual output. Author once, generate docs for both humans and AI. Complete implementation with build pipeline.</p>
+                <div class="chapters">3 chapters</div>
+            </div>
+            <div class="part-card full">
+                <div class="part-num">Part V + Appendices</div>
+                <h3>The Punchline</h3>
+                <p>Where documentation is heading. Plus the complete testing toolkit, the BookClub API reference in all formats, and everything you need to reproduce the research yourself.</p>
+                <div class="chapters">2 chapters + 3 appendices</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- TOOL -->
+<section class="tool-section">
+    <div class="container fade-in" style="text-align: center;">
+        <div class="section-label">Free Tool</div>
+        <h2>See what your docs cost</h2>
+        <p style="color: var(--muted); font-size: 0.9rem; max-width: 480px; margin: 0 auto 1.5rem;">Paste your API documentation and see the token cost in real time. The first step to understanding the problem.</p>
+
+        <div class="terminal">
+            <span class="comment">// Paste any API documentation</span><br>
+            <span class="comment">// See what it costs AI tools to read</span><br><br>
+            <span class="prompt">$</span> <span class="bright">paste your docs above</span><br><br>
+            <span class="dim">Tokens:</span> <span class="yellow">???</span><br>
+            <span class="dim">Context window used:</span> <span class="yellow">???</span><br>
+            <span class="dim">Estimated annual cost:</span> <span class="yellow">???</span><br><br>
+            <span class="comment">// Now imagine that number could be significantly smaller.</span><br>
+            <span class="comment">// The book shows you how much, and why.</span>
+        </div>
+
+        <a href="https://doc-cost.vercel.app/" class="tool-link" target="_blank" rel="noopener">
+            Try the Docs Cost Calculator →
+        </a>
+    </div>
+</section>
+
+<!-- ENDORSEMENTS (placeholder for when you have them) -->
+<!--
+<section class="endorsements">
+    <div class="container fade-in">
+        <div class="section-label">What People Are Saying</div>
+
+        <div class="endorsement">
+            <blockquote>"Quote from endorser about the book."</blockquote>
+            <cite>— Name, Title at Company</cite>
+        </div>
+
+        <div class="endorsement">
+            <blockquote>"Another endorsement quote."</blockquote>
+            <cite>— Name, Title at Company</cite>
+        </div>
+    </div>
+</section>
+-->
+
+<!-- AUTHOR -->
+<section>
+    <div class="container fade-in">
+        <div class="section-label">About the Author</div>
+        <div class="author-name">Ed Grzetich</div>
+        <p class="author-bio">
+            Independent researcher studying how API documentation format affects AI code generation. Building MCP servers that bridge REST APIs and conversational AI interfaces. 15+ years in technical documentation across defense (General Dynamics/NASA), fintech (Mastercard), and cloud computing (AWS). Presented "Making Data Conversational: Building MCP Servers as API Bridges" at AI in Fort Wayne.
+        </p>
+        <div class="author-links">
+            <a href="https://grzeti.ch" target="_blank" rel="noopener">Portfolio</a>
+            <a href="https://www.linkedin.com/in/edgrzetich/" target="_blank" rel="noopener">LinkedIn</a>
+            <a href="https://doc-cost.vercel.app/" target="_blank" rel="noopener">Docs Cost Calculator</a>
+        </div>
+    </div>
+</section>
+
+<!-- BUY -->
+<section class="buy-section">
+    <div class="container fade-in">
+        <h2>Get the findings</h2>
+        <p class="price-note">Early access — in progress, free updates as chapters ship</p>
+        <div class="buy-buttons">
+            <a href="#" class="btn-primary">
+                Buy on Leanpub →
+            </a>
+            <a href="https://doc-cost.vercel.app/" class="btn-secondary" target="_blank" rel="noopener">
+                Try the free tool first
+            </a>
+        </div>
+        <p class="buy-note">
+            Available on Leanpub. All formats: PDF, EPUB, and web. Buy now, get every future update free as new chapters publish.
+        </p>
+    </div>
+</section>
+
+<!-- EMAIL -->
+<section class="email-section">
+    <div class="container">
+        <h2>Get the research updates</h2>
+        <p>New findings, chapter releases, and documentation strategy insights. No spam, no fluff.</p>
+        <form
+            action="https://buttondown.com/api/emails/embed-subscribe/tokensnotjokin"
+            method="post"
+            class="embeddable-buttondown-form email-form"
+            referrerpolicy="unsafe-url"
+        >
+            <input type="email" name="email" id="bd-email" placeholder="you@company.com" required>
+            <input type="hidden" value="1" name="embed">
+            <button type="submit">Subscribe</button>
+        </form>
+    </div>
+</section>
+
+<footer>
+    <div class="container">
+        <p>© 2026 Ed Grzetich — Built with data, not opinions.</p>
+    </div>
+</footer>
+
+<script>
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, { threshold: 0.15 });
+
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
