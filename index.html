@@ -4,8 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tokens Not Jokin' — How API Documentation Format Affects AI Coding Tool Costs</title>
-    <meta name="description" content="Based on 12,000 integration tests across 5 AI models. The format of your API docs is costing you more than you think.">
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <meta name="description" content="Based on over 21,000 integration tests across 4 AI models and 2 APIs. The format of your API docs is costing you more than you think.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
@@ -454,6 +453,54 @@
         }
 
         /* ---- EMAIL SIGNUP ---- */
+        .inline-signup {
+            background: var(--cream);
+            padding: 3rem 0;
+            border-bottom: 1px solid var(--rule);
+        }
+
+        .inline-signup h2 {
+            margin-bottom: 0.5rem;
+        }
+
+        .inline-signup .email-form {
+            display: flex;
+            gap: 0;
+            max-width: 460px;
+            margin: 0 auto;
+        }
+
+        .inline-signup .email-form input[type="email"] {
+            flex: 1;
+            padding: 0.85rem 1.2rem;
+            font-family: 'DM Mono', monospace;
+            font-size: 0.8rem;
+            border: 2px solid var(--rule);
+            background: var(--paper);
+            color: var(--ink);
+            outline: none;
+        }
+
+        .inline-signup .email-form input[type="email"]::placeholder { color: var(--muted); }
+        .inline-signup .email-form input[type="email"]:focus { border-color: var(--accent); }
+
+        .inline-signup .email-form button {
+            padding: 0.85rem 1.5rem;
+            background: var(--accent);
+            color: var(--paper);
+            border: 2px solid var(--accent);
+            font-family: 'DM Mono', monospace;
+            font-size: 0.8rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .inline-signup .email-form button:hover {
+            background: var(--accent-light);
+            border-color: var(--accent-light);
+        }
+
         .email-section {
             background: var(--ink);
             color: var(--paper);
@@ -564,6 +611,7 @@
             .parts-grid { grid-template-columns: 1fr; }
             .buy-buttons { flex-direction: column; align-items: center; }
             .email-form { flex-direction: column; }
+            .inline-signup .email-form { flex-direction: column; }
         }
 
         /* ---- ANIMATIONS ---- */
@@ -589,7 +637,7 @@
             <span>2026</span>
         </div>
         <h1>Tokens Not <span class="highlight">Jokin'</span></h1>
-        <p class="subtitle">Every time an AI coding tool reads your API docs, it costs tokens. But does the format of those docs matter? We ran over 21,000 integration tests across 4 AI models and 2 APIs to find out.</p>
+        <p class="subtitle">Every time an AI coding tool reads your API docs, the tool spends tokens. Does the format of those docs affect the number of tokens? The code quality? We ran over 21,000 integration tests across 4 AI models and 2 APIs to find out.</p>
         <div class="hero-stats">
             <div class="hero-stat">
                 <span class="num">21,000</span> integration tests
@@ -598,7 +646,7 @@
                 <span class="num">4</span> AI models tested
             </div>
             <div class="hero-stat">
-                <span class="num">5</span> doc formats compared
+                <span class="num">4</span> doc formats compared
             </div>
         </div>
     </div>
@@ -631,6 +679,24 @@
     </div>
 </section>
 
+<!-- EARLY SIGNUP (high on page, right after problem hooks curiosity) -->
+<section class="inline-signup">
+    <div class="container fade-in" style="text-align: center;">
+        <h2>Get the findings first</h2>
+        <p style="color: var(--muted); font-size: 0.9rem; max-width: 480px; margin: 0 auto 1.5rem;">Research updates, chapter releases, and documentation strategy insights. 1-2 emails per month. No spam.</p>
+        <form
+            action="https://buttondown.com/api/emails/embed-subscribe/tokensnotjokin"
+            method="post"
+            class="embeddable-buttondown-form email-form"
+            referrerpolicy="unsafe-url"
+        >
+            <input type="email" name="email" placeholder="you@company.com" required>
+            <input type="hidden" value="1" name="embed">
+            <button type="submit">Subscribe</button>
+        </form>
+    </div>
+</section>
+
 <!-- WHAT THE BOOK ANSWERS -->
 <section>
     <div class="container fade-in">
@@ -640,7 +706,7 @@
         <div class="questions-list">
             <div class="question-item">
                 Which documentation format is most token-efficient for AI consumption?
-                <div class="question-answer">We tested 5 formats head-to-head. The results are in the book.</div>
+                <div class="question-answer">We tested 4 formats head-to-head. The results are in the book.</div>
             </div>
             <div class="question-item">
                 Does format affect AI code generation quality, or just cost?
@@ -652,7 +718,7 @@
             </div>
             <div class="question-item">
                 Can you serve both humans and AI from a single doc source?
-                <div class="question-answer">The book includes a complete single-source, dual-output architecture.</div>
+                <div class="question-answer">The book includes a framework for serving both humans and AI from a single documentation source.</div>
             </div>
             <div class="question-item">
                 How do you test your own docs for AI readiness?
@@ -671,14 +737,14 @@
         <div class="method-steps">
             <div class="method-step">
                 <div>
-                    <h3>Built a clean test API</h3>
-                    <p>Every popular API is in LLM training data. Testing with Stripe's docs means you're measuring memorization, not comprehension. We built a custom API from scratch to eliminate contamination.</p>
+                    <h3>Built control APIs</h3>
+                    <p>Popular APIs are all over the internet, including in LLM training data. Testing with Stripe's docs means you might be measuring memorization, not comprehension. We built two control APIs from scratch to eliminate contamination.</p>
                 </div>
             </div>
             <div class="method-step">
                 <div>
-                    <h3>Same API, five formats</h3>
-                    <p>Identical information documented in five different formats. Same endpoints, same parameters, same constraints. The only variable is how it's structured.</p>
+                    <h3>Same APIs, four formats</h3>
+                    <p>Identical information documented in four different formats. Same endpoints, same parameters, same constraints. The only variable is how it's structured.</p>
                 </div>
             </div>
             <div class="method-step">
@@ -713,7 +779,7 @@
             <div class="part-card">
                 <div class="part-num">Part II</div>
                 <h3>The Tests Don't Lie</h3>
-                <p>12,000 integration tests. 5 formats. 5 models. The complete results, with data on token efficiency, code generation quality, and error handling.</p>
+                <p>Over 21,000 integration tests. 4 formats. 4 models. 2 APIs. The complete results, with data on token efficiency, code generation quality, and error handling.</p>
                 <div class="chapters">5 chapters</div>
             </div>
             <div class="part-card">
