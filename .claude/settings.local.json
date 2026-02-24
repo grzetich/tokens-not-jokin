@@ -3,7 +3,11 @@
     "allow": [
       "Bash(git add:*)",
       "Bash(git commit:*)",
-      "Bash(git push)"
+      "Bash(git push)",
+      "Bash(npm ls:*)",
+      "Bash(node:*)",
+      "Bash(cd /c/Users/edgrz/lib/tokens-not-jokin && npx --yes puppeteer@latest -e \"\nconst puppeteer = require\\('puppeteer'\\);\n\\(async \\(\\) => {\n  const browser = await puppeteer.launch\\(\\);\n  const page = await browser.newPage\\(\\);\n  await page.setViewport\\({ width: 1200, height: 630 }\\);\n  await page.goto\\('file:///C:/Users/edgrz/lib/tokens-not-jokin/blog/og-the-problem-nobodys-measuring.html', { waitUntil: 'networkidle0' }\\);\n  await page.screenshot\\({ path: 'blog/og-the-problem-nobodys-measuring.png', type: 'png' }\\);\n  await browser.close\\(\\);\n  console.log\\('Done'\\);\n}\\)\\(\\);\n\" 2>&1)",
+      "Bash(tail:*)"
     ]
   }
 }
