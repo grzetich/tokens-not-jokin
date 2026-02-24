@@ -312,6 +312,45 @@
             font-weight: 500;
         }
 
+        /* ---- SHARE BAR ---- */
+        .share-bar {
+            margin-top: 2.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--rule);
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .share-bar .share-label {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.7rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--muted);
+        }
+
+        .share-bar a,
+        .share-bar button {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.7rem;
+            color: var(--muted);
+            text-decoration: none;
+            letter-spacing: 0.05em;
+            border: none;
+            background: none;
+            cursor: pointer;
+            padding: 0;
+            border-bottom: 1px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .share-bar a:hover,
+        .share-bar button:hover {
+            color: var(--accent);
+            border-bottom-color: var(--accent);
+        }
+
         /* ---- FOOTER ---- */
         .blog-footer {
             padding: 2rem 0;
@@ -399,6 +438,13 @@
             <p><strong>See what your docs cost.</strong> I built a free calculator that shows the token cost of your API documentation in real time. Paste your spec, see the numbers. It runs entirely in your browser.</p>
             <p><a href="https://doc-cost.vercel.app/" target="_blank" rel="noopener">Try the Docs Cost Calculator →</a></p>
             <p><a href="https://leanpub.com/tokensnotjokin" target="_blank" rel="noopener">Pre-order the book on Leanpub →</a></p>
+        </div>
+
+        <div class="share-bar">
+            <span class="share-label">Share</span>
+            <a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Ftokensnotjokin.com%2Fblog%2Fthe-problem-nobodys-measuring&text=The%20Problem%20Nobody%E2%80%99s%20Measuring%20%E2%80%94%20nobody%20tracks%20what%20it%20costs%20AI%20tools%20to%20read%20your%20API%20docs." target="_blank" rel="noopener">Twitter</a>
+            <a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Ftokensnotjokin.com%2Fblog%2Fthe-problem-nobodys-measuring" target="_blank" rel="noopener">LinkedIn</a>
+            <button onclick="navigator.clipboard.writeText('https://tokensnotjokin.com/blog/the-problem-nobodys-measuring');this.textContent='Copied!';setTimeout(()=>this.textContent='Copy link',2000)">Copy link</button>
         </div>
     </div>
 </article>
