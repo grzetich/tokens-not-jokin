@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Problem Nobody's Measuring: Token Cost of API Documentation for AI | Tokens Not Jokin'</title>
+    <meta name="description" content="Nobody tracks what it costs AI coding tools to read API documentation. Learn why documentation token efficiency matters for AI code generation with Copilot, Cursor, and Claude.">
+    <meta name="author" content="Ed Grzetich">
+    <meta name="keywords" content="API documentation token cost, AI code generation, documentation format, token efficiency, AI coding tools, LLM context window, Copilot, Cursor, Claude, developer experience">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="The Problem Nobody's Measuring: Token Cost of API Docs for AI">
+    <meta property="og:description" content="Nobody tracks what it costs AI coding tools to read API documentation. Learn why documentation token efficiency matters for AI code generation.">
+    <meta property="og:url" content="https://tokensnotjokin.com/blog/the-problem-nobodys-measuring">
+    <meta property="og:image" content="https://tokensnotjokin.com/blog/og-the-problem-nobodys-measuring.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:site_name" content="Tokens Not Jokin'">
+    <meta property="article:published_time" content="2026-02-24T00:00:00Z">
+    <meta property="article:author" content="https://grzeti.ch">
+    <meta property="article:section" content="Research">
+    <meta property="article:tag" content="API Documentation">
+    <meta property="article:tag" content="AI Code Generation">
+    <meta property="article:tag" content="Token Efficiency">
+    <meta property="article:tag" content="Developer Experience">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="The Problem Nobody's Measuring: Token Cost of API Docs for AI">
+    <meta name="twitter:description" content="Nobody tracks what it costs AI coding tools to read API documentation. Learn why documentation token efficiency matters for AI code generation.">
+    <meta name="twitter:image" content="https://tokensnotjokin.com/blog/og-the-problem-nobodys-measuring.png">
+    <meta name="twitter:label1" content="Written by">
+    <meta name="twitter:data1" content="Ed Grzetich">
+    <meta name="twitter:label2" content="Reading time">
+    <meta name="twitter:data2" content="4 min read">
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="canonical" href="https://tokensnotjokin.com/blog/the-problem-nobodys-measuring">
+
+    <!-- LD+JSON Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "Article",
+                "@id": "https://tokensnotjokin.com/blog/the-problem-nobodys-measuring#article",
+                "headline": "The Problem Nobody's Measuring",
+                "description": "Nobody tracks what it costs AI coding tools to read API documentation. Learn why documentation token efficiency matters for AI code generation.",
+                "url": "https://tokensnotjokin.com/blog/the-problem-nobodys-measuring",
+                "datePublished": "2026-02-24T00:00:00Z",
+                "dateModified": "2026-02-24T00:00:00Z",
+                "inLanguage": "en",
+                "mainEntityOfPage": {
+                    "@type": "WebPage",
+                    "@id": "https://tokensnotjokin.com/blog/the-problem-nobodys-measuring"
+                },
+                "author": {
+                    "@type": "Person",
+                    "@id": "https://tokensnotjokin.com/#author"
+                },
+                "publisher": {
+                    "@type": "Organization",
+                    "name": "Tokens Not Jokin'",
+                    "url": "https://tokensnotjokin.com",
+                    "logo": {
+                        "@type": "ImageObject",
+                        "url": "https://tokensnotjokin.com/favicon.svg"
+                    }
+                },
+                "image": {
+                    "@type": "ImageObject",
+                    "url": "https://tokensnotjokin.com/blog/og-the-problem-nobodys-measuring.png",
+                    "width": 1200,
+                    "height": 630
+                },
+                "keywords": ["API documentation", "token cost", "AI code generation", "LLM context window", "documentation format", "developer experience", "Copilot", "Cursor", "Claude"],
+                "articleSection": "Research",
+                "wordCount": 750,
+                "isPartOf": {
+                    "@type": "Blog",
+                    "name": "Tokens Not Jokin' Blog",
+                    "url": "https://tokensnotjokin.com/blog"
+                },
+                "about": [
+                    {
+                        "@type": "Thing",
+                        "name": "API Documentation",
+                        "description": "Machine-readable and human-readable documentation for application programming interfaces"
+                    },
+                    {
+                        "@type": "Thing",
+                        "name": "AI Code Generation",
+                        "description": "Using large language models to generate code from documentation and prompts"
+                    },
+                    {
+                        "@type": "Thing",
+                        "name": "Token Efficiency",
+                        "description": "Optimizing the number of tokens consumed by LLMs when processing content"
+                    }
+                ]
+            },
+            {
+                "@type": "Person",
+                "@id": "https://tokensnotjokin.com/#author",
+                "name": "Ed Grzetich",
+                "url": "https://grzeti.ch",
+                "sameAs": [
+                    "https://www.linkedin.com/in/edgrzetich/"
+                ],
+                "jobTitle": "Independent Researcher",
+                "description": "Independent researcher studying how API documentation format affects AI code generation. 15+ years in technical documentation across defense, fintech, and cloud computing."
+            },
+            {
+                "@type": "BreadcrumbList",
+                "@id": "https://tokensnotjokin.com/blog/the-problem-nobodys-measuring#breadcrumb",
+                "itemListElement": [
+                    {
+                        "@type": "ListItem",
+                        "position": 1,
+                        "name": "Tokens Not Jokin'",
+                        "item": "https://tokensnotjokin.com"
+                    },
+                    {
+                        "@type": "ListItem",
+                        "position": 2,
+                        "name": "Blog",
+                        "item": "https://tokensnotjokin.com/blog"
+                    },
+                    {
+                        "@type": "ListItem",
+                        "position": 3,
+                        "name": "The Problem Nobody's Measuring",
+                        "item": "https://tokensnotjokin.com/blog/the-problem-nobodys-measuring"
+                    }
+                ]
+            }
+        ]
+    }
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --ink: #0a0a0a;
+            --paper: #f6f1eb;
+            --cream: #ede6dc;
+            --accent: #c44b1a;
+            --accent-light: #e8693a;
+            --muted: #7a7168;
+            --rule: #c9bfb3;
+            --code-bg: #1a1a1a;
+            --code-fg: #e8dfd5;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html {
+            font-size: 18px;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--paper);
+            color: var(--ink);
+            line-height: 1.65;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        /* ---- NAV ---- */
+        .blog-nav {
+            padding: 1.5rem 0;
+            border-bottom: 1px solid var(--rule);
+        }
+
+        .blog-nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .blog-nav a {
+            color: var(--ink);
+            text-decoration: none;
+        }
+
+        .blog-nav .site-name {
+            font-family: 'Instrument Serif', serif;
+            font-size: 1.2rem;
+        }
+
+        .blog-nav .back-link {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.75rem;
+            letter-spacing: 0.05em;
+            color: var(--muted);
+            transition: color 0.2s;
+        }
+
+        .blog-nav .back-link:hover {
+            color: var(--accent);
+        }
+
+        /* ---- ARTICLE ---- */
+        .container {
+            max-width: 680px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        article {
+            padding: 3rem 0 4rem;
+        }
+
+        .article-meta {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.7rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 1rem;
+        }
+
+        article h1 {
+            font-family: 'Instrument Serif', serif;
+            font-size: 2.4rem;
+            font-weight: 400;
+            line-height: 1.15;
+            margin-bottom: 1.5rem;
+            max-width: 580px;
+        }
+
+        .article-lede {
+            font-size: 1.15rem;
+            color: var(--muted);
+            line-height: 1.6;
+            margin-bottom: 2.5rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--rule);
+        }
+
+        article h2 {
+            font-family: 'Instrument Serif', serif;
+            font-size: 1.5rem;
+            font-weight: 400;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        article p {
+            margin-bottom: 1.25rem;
+        }
+
+        article p + p {
+            margin-top: 0;
+        }
+
+        article strong {
+            font-weight: 700;
+        }
+
+        article a {
+            color: var(--accent);
+            text-decoration: underline;
+            text-underline-offset: 2px;
+        }
+
+        article a:hover {
+            color: var(--accent-light);
+        }
+
+        article code {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.85em;
+            background: var(--cream);
+            padding: 0.15em 0.35em;
+            border-radius: 3px;
+        }
+
+        /* ---- CTA BOX ---- */
+        .article-cta {
+            margin-top: 3rem;
+            padding: 2rem;
+            background: var(--cream);
+            border-radius: 6px;
+            border-left: 3px solid var(--accent);
+        }
+
+        .article-cta p {
+            margin-bottom: 0.75rem;
+        }
+
+        .article-cta p:last-child {
+            margin-bottom: 0;
+        }
+
+        .article-cta a {
+            color: var(--accent);
+            font-weight: 500;
+        }
+
+        /* ---- FOOTER ---- */
+        .blog-footer {
+            padding: 2rem 0;
+            border-top: 1px solid var(--rule);
+            text-align: center;
+        }
+
+        .blog-footer p {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.7rem;
+            color: var(--muted);
+        }
+
+        .blog-footer a {
+            color: var(--muted);
+            text-decoration: none;
+        }
+
+        .blog-footer a:hover {
+            color: var(--accent);
+        }
+
+        /* ---- RESPONSIVE ---- */
+        @media (max-width: 600px) {
+            html { font-size: 16px; }
+            article h1 { font-size: 1.9rem; }
+            article h2 { font-size: 1.3rem; }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="blog-nav">
+    <div class="container">
+        <a href="/" class="site-name">Tokens Not Jokin'</a>
+        <a href="/" class="back-link">← Back to book</a>
+    </div>
+</nav>
+
+<article>
+    <div class="container">
+        <div class="article-meta"><time datetime="2026-02-24">February 24, 2026</time> · <span rel="author">Ed Grzetich</span></div>
+        <h1>The Problem Nobody's Measuring</h1>
+        <p class="article-lede">Your company tracks API latency, uptime, error rates, and developer satisfaction scores. But nobody's tracking what it costs AI tools to read your API documentation.</p>
+
+        <p>Open your observability dashboard. You can probably see API response times broken down by endpoint. Error rates by status code. Maybe even developer satisfaction from your last survey. If you're sophisticated, you're tracking time-to-first-hello-world for new integrations.</p>
+
+        <p>Now tell me: how many tokens does it cost an AI coding tool to read your API docs?</p>
+
+        <p>You don't know. Nobody does. There's no dashboard for this. No metric.</p>
+
+        <h2>The invisible transaction</h2>
+
+        <p>Every time a developer points Cursor, Copilot, or Claude at your API documentation, a transaction happens. The AI tool reads your docs, converts them into tokens, and uses those tokens to generate integration code. The format of your documentation determines how many tokens that costs.</p>
+
+        <p>This isn't theoretical. If your docs are in a verbose format, the AI tool consumes more of its context window just reading the spec. That leaves less room for reasoning, for the developer's project context, and for generating quality code. In the worst case, the documentation fills so much of the context window that the model can't produce working code at all.</p>
+
+        <p>And it compounds. Every endpoint. Every developer accessing your docs. Every day.</p>
+
+        <h2>Why nobody's noticed</h2>
+
+        <p>Documentation has traditionally been measured by human metrics: readability, completeness, accuracy, time-to-find-information. Those metrics still matter. But they're designed for a world where humans are the primary (or only) consumers of your docs.</p>
+
+        <p>That world is shifting. AI coding tools are increasingly the first reader of your API documentation. The developer asks the tool to integrate with your API, and the tool goes and reads your docs before generating code. The developer may never visit your docs site at all.</p>
+
+        <p>When the primary consumer changes, the metrics need to change too. But the tech writing community hasn't caught up. We're still optimizing for human readability while AI tools are silently consuming our docs in a completely different way, and paying a cost that nobody sees.</p>
+
+        <h2>The format question</h2>
+
+        <p>Here's what makes this interesting: the same API information, documented in different formats, produces different token costs. Sometimes dramatically different. Two docs describing the exact same endpoints, the exact same parameters, the exact same constraints, but one could cost significantly more tokens than the other.</p>
+
+        <p>That raises an obvious question: does the format also affect the quality of the code the AI generates? Or just the cost?</p>
+
+        <p>And a harder question: if you tried to test this with a popular API like Stripe's, how would you know whether the AI is reading your docs or just drawing on patterns it already learned from training data? Every popular API is all over GitHub, Stack Overflow, and tutorial sites. You can't isolate the variable.</p>
+
+        <h2>What I'm doing about it</h2>
+
+        <p>I've been researching this for the past year. I built two control APIs from scratch, APIs with no public footprint and no prior exposure in any training dataset. I documented each one in four different formats and ran over 21,000 integration tests across four AI models, from local models you can run on a laptop to frontier cloud APIs.</p>
+
+        <p>Clean data. No contamination question.</p>
+
+        <p>The results are coming in a book called <em>Tokens Not Jokin'</em>, out in March. But you don't have to wait for the book to start understanding the problem.</p>
+
+        <div class="article-cta">
+            <p><strong>See what your docs cost.</strong> I built a free calculator that shows the token cost of your API documentation in real time. Paste your spec, see the numbers. It runs entirely in your browser.</p>
+            <p><a href="https://doc-cost.vercel.app/" target="_blank" rel="noopener">Try the Docs Cost Calculator →</a></p>
+            <p><a href="https://leanpub.com/tokensnotjokin" target="_blank" rel="noopener">Pre-order the book on Leanpub →</a></p>
+        </div>
+    </div>
+</article>
+
+<footer class="blog-footer">
+    <div class="container">
+        <p>© 2026 <a href="https://grzeti.ch" target="_blank" rel="noopener">Ed Grzetich</a> · <a href="/">Tokens Not Jokin'</a></p>
+    </div>
+</footer>
+
+<script defer src="/_vercel/insights/script.js"></script>
+</body>
+</html>

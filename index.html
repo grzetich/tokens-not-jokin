@@ -26,13 +26,6 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <link rel="canonical" href="https://tokensnotjokin.com">
 
-    <!-- Privacy-friendly analytics by Plausible -->
-    <script async src="https://plausible.io/js/pa-tchVbsHDrRUg_MbgYKG82.js"></script>
-    <script>
-      window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
-      plausible.init()
-    </script>
-
     <!-- LD+JSON Structured Data -->
     <script type="application/ld+json">
     {
@@ -879,6 +872,18 @@
     </div>
 </section>
 
+<!-- BLOG -->
+<section>
+    <div class="container fade-in">
+        <div class="section-label">Latest</div>
+        <a href="/blog/the-problem-nobodys-measuring" style="text-decoration: none; color: inherit; display: block; padding: 1.5rem; background: var(--cream); border-radius: 6px; border-left: 3px solid var(--accent); transition: border-color 0.2s;">
+            <div style="font-family: 'DM Mono', monospace; font-size: 0.7rem; letter-spacing: 0.05em; color: var(--muted); margin-bottom: 0.5rem;">Feb 21, 2026</div>
+            <h3 style="font-family: 'Instrument Serif', serif; font-size: 1.3rem; font-weight: 400; margin-bottom: 0.5rem;">The Problem Nobody's Measuring</h3>
+            <p style="color: var(--muted); font-size: 0.9rem; margin: 0;">Your company tracks API latency, uptime, and error rates. But nobody's tracking what it costs AI tools to read your API documentation.</p>
+        </a>
+    </div>
+</section>
+
 <!-- ENDORSEMENTS (placeholder for when you have them) -->
 <!--
 <section class="endorsements">
@@ -969,5 +974,6 @@
     document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 </script>
 
+<script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>
