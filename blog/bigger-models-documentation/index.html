@@ -1,0 +1,325 @@
+/<!DOCTYPE html>
+<html lang="en">
+<head>
+<!--LD+JSON-->
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "The Surprising Thing About Bigger AI Models and Documentation",
+    "description": "Cloud AI models pass every test regardless of doc format. That's not a good thing. It means they're hiding a problem you'll hit later.",
+    "image": "https://tokensnotjokin.com/og-blog-bigger-models.png",
+    "author": {
+        "@type": "Person",
+        "name": "Ed Grzetich",
+        "url": "https://grzeti.ch"
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "Tokens Not Jokin'",
+        "url": "https://tokensnotjokin.com"
+    },
+    "datePublished": "2026-03-09",
+    "dateModified": "2026-03-09",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://tokensnotjokin.com/blog/bigger-models-documentation"
+    },
+    "keywords": ["API documentation", "AI code generation", "documentation format", "token efficiency", "OpenAPI", "YAML"],
+    "isPartOf": {
+        "@type": "Book",
+        "name": "Tokens Not Jokin'",
+        "url": "https://leanpub.com/tokensnotjokin"
+    }
+}
+</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Surprising Thing About Bigger AI Models and Documentation — Tokens Not Jokin'</title>
+    <meta name="description" content="Cloud AI models pass every test regardless of doc format. That's not a good thing. It means they're hiding a problem you'll hit later.">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="The Surprising Thing About Bigger AI Models and Documentation">
+    <meta property="og:description" content="Cloud AI models pass every test regardless of doc format. That's not a good thing. It means they're hiding a problem you'll hit later.">
+    <meta property="og:url" content="https://tokensnotjokin.com/blog/bigger-models-documentation">
+    <meta property="og:image" content="https://tokensnotjokin.com/og-blog-bigger-models.png">
+    <meta property="og:site_name" content="Tokens Not Jokin'">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="The Surprising Thing About Bigger AI Models and Documentation">
+    <meta name="twitter:description" content="Cloud AI models pass every test regardless of doc format. That's not a good thing. It means they're hiding a problem you'll hit later.">
+    <meta name="twitter:image" content="https://tokensnotjokin.com/og-blog-bigger-models.png">
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="canonical" href="https://tokensnotjokin.com/blog/bigger-models-documentation">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --ink: #0a0a0a;
+            --paper: #f6f1eb;
+            --cream: #ede6dc;
+            --accent: #c44b1a;
+            --accent-light: #e8693a;
+            --muted: #7a7168;
+            --rule: #c9bfb3;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html {
+            font-size: 18px;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--paper);
+            color: var(--ink);
+            line-height: 1.65;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        .blog-nav {
+            padding: 1.5rem 0;
+            border-bottom: 1px solid var(--rule);
+        }
+
+        .blog-nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .blog-nav a {
+            color: var(--ink);
+            text-decoration: none;
+        }
+
+        .blog-nav .site-name {
+            font-family: 'Instrument Serif', serif;
+            font-size: 1.2rem;
+        }
+
+        .blog-nav .back-link {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.75rem;
+            letter-spacing: 0.05em;
+            color: var(--muted);
+            transition: color 0.2s;
+        }
+
+        .blog-nav .back-link:hover {
+            color: var(--accent);
+        }
+
+        .container {
+            max-width: 680px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        article {
+            padding: 3rem 0 4rem;
+        }
+
+        .article-meta {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.7rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 1rem;
+        }
+
+        article h1 {
+            font-family: 'Instrument Serif', serif;
+            font-size: 2.4rem;
+            font-weight: 400;
+            line-height: 1.15;
+            margin-bottom: 1.5rem;
+            max-width: 580px;
+        }
+
+        .article-lede {
+            font-size: 1.15rem;
+            color: var(--muted);
+            line-height: 1.6;
+            margin-bottom: 2.5rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--rule);
+        }
+
+        article h2 {
+            font-family: 'Instrument Serif', serif;
+            font-size: 1.5rem;
+            font-weight: 400;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        article p {
+            margin-bottom: 1.25rem;
+        }
+
+        article strong {
+            font-weight: 700;
+        }
+
+        article a {
+            color: var(--accent);
+            text-decoration: underline;
+            text-underline-offset: 2px;
+        }
+
+        article a:hover {
+            color: var(--accent-light);
+        }
+
+        article em {
+            font-style: italic;
+        }
+
+        .article-cta {
+            margin-top: 3rem;
+            padding: 2rem;
+            background: var(--cream);
+            border-radius: 6px;
+            border-left: 3px solid var(--accent);
+        }
+
+        .article-cta p {
+            margin-bottom: 0.75rem;
+        }
+
+        .article-cta p:last-child {
+            margin-bottom: 0;
+        }
+
+        .article-cta a {
+            color: var(--accent);
+            font-weight: 500;
+        }
+
+        .blog-footer {
+            padding: 2rem 0;
+            border-top: 1px solid var(--rule);
+            text-align: center;
+        }
+
+        .blog-footer p {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.7rem;
+            color: var(--muted);
+        }
+
+        .blog-footer a {
+            color: var(--muted);
+            text-decoration: none;
+        }
+
+        .blog-footer a:hover {
+            color: var(--accent);
+        }
+
+        @media (max-width: 600px) {
+            html { font-size: 16px; }
+            article h1 { font-size: 1.9rem; }
+            article h2 { font-size: 1.3rem; }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="blog-nav">
+    <div class="container">
+        <a href="/" class="site-name">Tokens Not Jokin'</a>
+        <a href="/" class="back-link">← Back to book</a>
+    </div>
+</nav>
+
+<article>
+    <div class="container">
+        <div class="article-meta">March 10, 2026 · Ed Grzetich</div>
+        <h1>The Surprising Thing About Bigger AI Models and Documentation</h1>
+        <p class="article-lede">Cloud AI models pass every documentation format test I threw at them. 100% across the board. That sounds like good news. It isn't.</p>
+
+        <h2>The result that almost fooled me</h2>
+
+        <p>When I ran my first round of tests with Claude Sonnet and GPT-4o, the results looked boring. Every format, every API, every endpoint: 100% pass rate. YAML, OpenAPI, Markdown, DON. Didn't matter. The big models ate it all and produced working code every time.</p>
+
+        <p>If I had stopped there, the conclusion would have been simple: format doesn't doesn't affect code quality or output. Use whatever format for your API docs you want. And that would have been completely wrong.</p>
+
+        <h2>What the big models are hiding</h2>
+
+        <p>A 100% pass rate across all formats doesn't mean all formats are equal. It means the model is powerful enough to compensate for format inefficiency. It's brute-forcing through verbose documentation the same way a fast CPU can brute-force through unoptimized code. The code works, so nobody notices the waste.</p>
+
+        <p>But the waste is real. A verbose format consumes more of the model's context window just to describe the same API. That's context that could be used for the developer's project files, for reasoning about edge cases, or for generating more complete code. When the documentation is the only thing in context, the big model handles it fine. In a real workflow, with other information competing for that same context window, the tax adds up.</p>
+
+        <p>YAML describes the same API information using up to 80% fewer tokens than OpenAPI 3.0. That's not a rounding error. That's the difference between your documentation leaving room for the model to think, or filling the window before it starts.</p>
+
+        <h2>Where the truth shows up</h2>
+
+        <p>The real story emerged when I tested smaller models. Not toy models, but real open-source models from Alibaba and Microsoft: a 7B parameter model and a 3.8B parameter model. The kind of models that run locally on a laptop.</p>
+
+        <p>On the simple control API (6 endpoints), even the small models handled most formats well. OpenAPI dropped to 83%, but everything else stayed at 100%. Format mattered, but not dramatically.</p>
+
+        <p>Then I tested the complex control API. Ten endpoints, authenticated webhook verification, cursor-based pagination, partial updates. The kind of API patterns that exist in the real world.</p>
+
+        <p>You can read about both APIs in more detail in <a href="https://tokensnotjokin.com/blog/contamination-free-api">this blog post</a>, and of course, in the book.</p>
+
+        <p>The 3.8B model with YAML: 100% pass rate. With Markdown: 100%. With DON: 100%.</p>
+
+        <p>With OpenAPI: 0%. Not low. Zero. The model didn't produce bad code. It stopped producing code entirely. The failures weren't wrong functions with bad parameters. They were fragments of commas and quotes. The 44,000-character OpenAPI spec went in, and the model couldn't generate coherent output of any kind.</p>
+
+        <h2>Same information, different outcome</h2>
+
+        <p>This is the part that matters: all four formats describe the exact same API. Same endpoints, same parameters, same constraints. The only thing that changed was how that information was structured. And that structural choice determined whether a small model could use the API at all.</p>
+
+        <p>The big models masked this entirely. If you only test with a frontier model, you'll never see it. Your docs look fine. Your tests pass. And then a developer using a local model, or a model with a smaller context window, or a model that's also holding their project files and conversation in context, hits a wall you didn't know existed.</p>
+
+        <h2>The Invisible Wall</h2>
+
+        <p>Even when the big models pass every test, format still affects what happens on the other side. A model reading a 44,000-character OpenAPI spec has less room for everything else than a model reading an 8,500-character YAML spec that describes the same API. Less room for the developer's project files, less room for reasoning, less room for generating complete code. Your docs work. They could just work better, and you'd never know the difference from your side.</p>
+
+        <p>This is why I call it the invisible wall. The big model compensates. The code works. Nobody complains. But the model is spending capacity on parsing verbose documentation instead of writing better code. Your customers are paying for it in tokens, and developers are paying for it in quality they never see because they have nothing to compare it against.</p>
+
+        <h2>What this means</h2>
+
+        <p>If you maintain API documentation, the big model pass rates are misleading. They tell you everything works, which is true…and useless. The interesting question isn't whether Claude can handle your docs. It's whether your docs are making Claude work harder than it needs to, and whether a developer with a smaller model or a fuller context window will hit a wall you didn't know existed.</p>
+
+        <p>The format of your documentation is the variable you control. Model capability is not. And in my data, format explains over 10x more variance in generated code than model choice.</p>
+
+<p>Most of the industry conversation is about which AI model is best. The data says the format of your documentation matters more for what that model produces.</p>
+
+        <div class="article-cta">
+            <p><strong>The full findings, including all four formats, both control APIs, and the complete pass rate and token efficiency data, are in <em>Tokens Not Jokin'</em>, out this month.</strong></p>
+            <p><a href="https://doc-cost.vercel.app/" target="_blank" rel="noopener">Try the free Docs Cost Calculator →</a></p>
+            <p><a href="https://leanpub.com/tokensnotjokin" target="_blank" rel="noopener">Get the book on Leanpub →</a></p>
+        </div>
+    </div>
+</article>
+
+<footer class="blog-footer">
+    <div class="container">
+        <p>© 2026 <a href="https://grzeti.ch" target="_blank" rel="noopener">Ed Grzetich</a> · <a href="/">Tokens Not Jokin'</a></p>
+    </div>
+</footer>
+
+<script defer src="/_vercel/insights/script.js"></script>
+</body>
+</html>
