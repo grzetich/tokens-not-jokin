@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Book Is Here: Tokens Not Jokin'</title>
+    <meta name="description" content="After several months and 21,000+ integration tests, Tokens Not Jokin' is here.">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="The Book Is Here">
+    <meta property="og:description" content="After several months and 21,000+ integration tests, Tokens Not Jokin' is here.">
+    <meta property="og:url" content="https://tokensnotjokin.com/blog/the-book-is-live">
+    <meta property="og:image" content="https://tokensnotjokin.com/og-image.png">
+    <meta property="og:site_name" content="Tokens Not Jokin'">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="The Book Is Here">
+    <meta name="twitter:description" content="After several months and 21,000+ integration tests, Tokens Not Jokin' is here.">
+    <meta name="twitter:image" content="https://tokensnotjokin.com/og-image.png">
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="canonical" href="https://tokensnotjokin.com/blog/the-book-is-live">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --ink: #0a0a0a;
+            --paper: #f6f1eb;
+            --cream: #ede6dc;
+            --accent: #c44b1a;
+            --accent-light: #e8693a;
+            --muted: #7a7168;
+            --rule: #c9bfb3;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html {
+            font-size: 18px;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--paper);
+            color: var(--ink);
+            line-height: 1.65;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        .blog-nav {
+            padding: 1.5rem 0;
+            border-bottom: 1px solid var(--rule);
+        }
+
+        .blog-nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .blog-nav a {
+            color: var(--ink);
+            text-decoration: none;
+        }
+
+        .blog-nav .site-name {
+            font-family: 'Instrument Serif', serif;
+            font-size: 1.2rem;
+        }
+
+        .blog-nav .back-link {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.75rem;
+            letter-spacing: 0.05em;
+            color: var(--muted);
+            transition: color 0.2s;
+        }
+
+        .blog-nav .back-link:hover {
+            color: var(--accent);
+        }
+
+        .container {
+            max-width: 680px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        article {
+            padding: 3rem 0 4rem;
+        }
+
+        .article-meta {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.7rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 1rem;
+        }
+
+        article h1 {
+            font-family: 'Instrument Serif', serif;
+            font-size: 2.4rem;
+            font-weight: 400;
+            line-height: 1.15;
+            margin-bottom: 1.5rem;
+            max-width: 580px;
+        }
+
+        .article-lede {
+            font-size: 1.15rem;
+            color: var(--muted);
+            line-height: 1.6;
+            margin-bottom: 2.5rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--rule);
+        }
+
+        article h2 {
+            font-family: 'Instrument Serif', serif;
+            font-size: 1.5rem;
+            font-weight: 400;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        article p {
+            margin-bottom: 1.25rem;
+        }
+
+        article strong {
+            font-weight: 700;
+        }
+
+        article a {
+            color: var(--accent);
+            text-decoration: underline;
+            text-underline-offset: 2px;
+        }
+
+        article a:hover {
+            color: var(--accent-light);
+        }
+
+        article em {
+            font-style: italic;
+        }
+
+        .article-cta {
+            margin-top: 3rem;
+            padding: 2rem;
+            background: var(--cream);
+            border-radius: 6px;
+            border-left: 3px solid var(--accent);
+        }
+
+        .article-cta p {
+            margin-bottom: 0.75rem;
+        }
+
+        .article-cta p:last-child {
+            margin-bottom: 0;
+        }
+
+        .article-cta a {
+            color: var(--accent);
+            font-weight: 500;
+        }
+
+        .blog-footer {
+            padding: 2rem 0;
+            border-top: 1px solid var(--rule);
+            text-align: center;
+        }
+
+        .blog-footer p {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.7rem;
+            color: var(--muted);
+        }
+
+        .blog-footer a {
+            color: var(--muted);
+            text-decoration: none;
+        }
+
+        .blog-footer a:hover {
+            color: var(--accent);
+        }
+
+        @media (max-width: 600px) {
+            html { font-size: 16px; }
+            article h1 { font-size: 1.9rem; }
+            article h2 { font-size: 1.3rem; }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="blog-nav">
+    <div class="container">
+        <a href="/" class="site-name">Tokens Not Jokin'</a>
+        <a href="/" class="back-link">← Back to book</a>
+    </div>
+</nav>
+
+<article>
+    <div class="container">
+        <div class="article-meta">March 31, 2026 · Ed Grzetich</div>
+        <h1>The Book Is Live</h1>
+        <p class="article-lede">After several months, two APIs built from scratch, four documentation formats, four AI models, and 21,000+ integration tests, <em>Tokens Not Jokin'</em> is here.</p>
+
+        <h2>What this book is about</h2>
+
+        <p>Every time a developer points an AI coding tool at your API documentation, tokens get consumed. The format of those docs determines how many tokens, what kind of code gets generated, and whether the code works at all.</p>
+
+        <p>Nobody had tested this with clean data. Every popular API is all over the training data, so any test you run with Stripe's docs or GitHub's docs is contaminated. You can't tell if the AI is reading your documentation or drawing on patterns it already learned.</p>
+
+        <p>I built two control APIs from scratch. No public footprint. No training data exposure. I documented each one in four formats and ran over 21,000 integration tests across four AI models, from models you can run on a laptop to frontier cloud APIs.</p>
+
+        <p>The book contains the full methodology, the complete results, and a framework for testing your own documentation.</p>
+
+        <h2>What I found</h2>
+
+        <p>The findings are in the book, not in this post. But I'll say this much: the industry conversation about which AI model produces the best code might be missing a bigger variable. One that documentation teams can influence.</p>
+
+        <p>If you write or maintain API documentation, this research will change how you think about format choices. If you manage a team that does, it gives you a testing methodology you can set up in an afternoon.</p>
+
+        <h2>How to get it</h2>
+
+        <p>The book is available now on Leanpub. You can also read the research blog posts that led up to it, starting with <a href="/blog/the-problem-nobodys-measuring">The Problem Nobody's Measuring</a>.</p>
+
+        <p>If you've been following along since the first LinkedIn post in February, thank you. The engagement, comments, and conversations shaped how I framed the research and what I chose to emphasize. This book is better because of that.</p>
+
+        <div class="article-cta">
+            <p><strong>Get the book:</strong></p>
+            <p><a href="https://leanpub.com/tokensnotjokin" target="_blank" rel="noopener">Tokens Not Jokin' on Leanpub →</a></p>
+            <p><a href="https://doc-cost.vercel.app/" target="_blank" rel="noopener">Try the free Docs Cost Calculator →</a></p>
+            <p><a href="/" rel="noopener">tokensnotjokin.com →</a></p>
+        </div>
+    </div>
+</article>
+
+<footer class="blog-footer">
+    <div class="container">
+        <p>© 2026 <a href="https://grzeti.ch" target="_blank" rel="noopener">Ed Grzetich</a> · <a href="/">Tokens Not Jokin'</a></p>
+    </div>
+</footer>
+
+<script defer src="/_vercel/insights/script.js"></script>
+</body>
+</html>
