@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>What's Inside the Book — Tokens Not Jokin'</title>
+    <meta name="description" content="15 chapters, 5 appendices, 21,000+ tests. A chapter-by-chapter look at Tokens Not Jokin'.">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="What's Inside the Book">
+    <meta property="og:description" content="15 chapters, 5 appendices, 21,000+ tests. A chapter-by-chapter look at Tokens Not Jokin'.">
+    <meta property="og:url" content="https://tokensnotjokin.com/blog/whats-inside">
+    <meta property="og:image" content="https://tokensnotjokin.com/og-blog-whats-inside.png">
+    <meta property="og:site_name" content="Tokens Not Jokin'">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="What's Inside the Book">
+    <meta name="twitter:description" content="15 chapters, 5 appendices, 21,000+ tests. A chapter-by-chapter look at Tokens Not Jokin'.">
+    <meta name="twitter:image" content="https://tokensnotjokin.com/og-blog-whats-inside.png">
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="canonical" href="https://tokensnotjokin.com/blog/whats-inside">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --ink: #0a0a0a;
+            --paper: #f6f1eb;
+            --cream: #ede6dc;
+            --accent: #c44b1a;
+            --accent-light: #e8693a;
+            --muted: #7a7168;
+            --rule: #c9bfb3;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html {
+            font-size: 18px;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--paper);
+            color: var(--ink);
+            line-height: 1.65;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        .blog-nav {
+            padding: 1.5rem 0;
+            border-bottom: 1px solid var(--rule);
+        }
+
+        .blog-nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .blog-nav a {
+            color: var(--ink);
+            text-decoration: none;
+        }
+
+        .blog-nav .site-name {
+            font-family: 'Instrument Serif', serif;
+            font-size: 1.2rem;
+        }
+
+        .blog-nav .back-link {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.75rem;
+            letter-spacing: 0.05em;
+            color: var(--muted);
+            transition: color 0.2s;
+        }
+
+        .blog-nav .back-link:hover {
+            color: var(--accent);
+        }
+
+        .container {
+            max-width: 680px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        article {
+            padding: 3rem 0 4rem;
+        }
+
+        .article-meta {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.7rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 1rem;
+        }
+
+        article h1 {
+            font-family: 'Instrument Serif', serif;
+            font-size: 2.4rem;
+            font-weight: 400;
+            line-height: 1.15;
+            margin-bottom: 1.5rem;
+            max-width: 580px;
+        }
+
+        .article-lede {
+            font-size: 1.15rem;
+            color: var(--muted);
+            line-height: 1.6;
+            margin-bottom: 2.5rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--rule);
+        }
+
+        article h2 {
+            font-family: 'Instrument Serif', serif;
+            font-size: 1.5rem;
+            font-weight: 400;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        article p {
+            margin-bottom: 1.25rem;
+        }
+
+        article strong {
+            font-weight: 700;
+        }
+
+        article a {
+            color: var(--accent);
+            text-decoration: underline;
+            text-underline-offset: 2px;
+        }
+
+        article a:hover {
+            color: var(--accent-light);
+        }
+
+        article em {
+            font-style: italic;
+        }
+
+        .part-label {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.7rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-top: 2.5rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .chapter-list {
+            margin: 1rem 0 1.5rem;
+        }
+
+        .chapter-item {
+            padding: 0.75rem 1rem;
+            background: var(--cream);
+            border-radius: 4px;
+            margin-bottom: 0.5rem;
+            border-left: 3px solid var(--rule);
+        }
+
+        .chapter-item .ch-num {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.7rem;
+            color: var(--accent);
+            letter-spacing: 0.08em;
+        }
+
+        .chapter-item .ch-title {
+            font-weight: 700;
+            font-size: 0.95rem;
+        }
+
+        .chapter-item .ch-desc {
+            font-size: 0.85rem;
+            color: var(--muted);
+            margin-top: 0.2rem;
+        }
+
+        .article-cta {
+            margin-top: 3rem;
+            padding: 2rem;
+            background: var(--cream);
+            border-radius: 6px;
+            border-left: 3px solid var(--accent);
+        }
+
+        .article-cta p {
+            margin-bottom: 0.75rem;
+        }
+
+        .article-cta p:last-child {
+            margin-bottom: 0;
+        }
+
+        .article-cta a {
+            color: var(--accent);
+            font-weight: 500;
+        }
+
+        .blog-footer {
+            padding: 2rem 0;
+            border-top: 1px solid var(--rule);
+            text-align: center;
+        }
+
+        .blog-footer p {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.7rem;
+            color: var(--muted);
+        }
+
+        .blog-footer a {
+            color: var(--muted);
+            text-decoration: none;
+        }
+
+        .blog-footer a:hover {
+            color: var(--accent);
+        }
+
+        @media (max-width: 600px) {
+            html { font-size: 16px; }
+            article h1 { font-size: 1.9rem; }
+            article h2 { font-size: 1.3rem; }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="blog-nav">
+    <div class="container">
+        <a href="/" class="site-name">Tokens Not Jokin'</a>
+        <a href="/" class="back-link">← Back to book</a>
+    </div>
+</nav>
+
+<article>
+    <div class="container">
+        <div class="article-meta">March 31, 2026 · Ed Grzetich</div>
+        <h1>What's Inside the Book</h1>
+        <p class="article-lede">15 chapters, 5 appendices, and over 21,000 integration tests. Here's what <em>Tokens Not Jokin'</em> covers, chapter by chapter.</p>
+
+        <div class="part-label">Part I — The Problem</div>
+        <h2>Your docs have a new audience</h2>
+
+        <p>46% of code is now AI-generated. Your documentation is being consumed as tokens, not as web pages. And most docs teams have zero visibility into how well their content works for AI tools.</p>
+
+        <div class="chapter-list">
+            <div class="chapter-item">
+                <div class="ch-num">CHAPTER 1</div>
+                <div class="ch-title">Who's Reading Your Docs Now?</div>
+                <div class="ch-desc">AI coding tools are the fastest-growing consumer of your API docs. What that means for how you write them.</div>
+            </div>
+            <div class="chapter-item">
+                <div class="ch-num">CHAPTER 2</div>
+                <div class="ch-title">The Token Budget</div>
+                <div class="ch-desc">Every token your docs consume is a token the model can't use for reasoning or code generation. YAML describes the same API using ~80% fewer tokens than OpenAPI.</div>
+            </div>
+            <div class="chapter-item">
+                <div class="ch-num">CHAPTER 3</div>
+                <div class="ch-title">The Measurement Gap</div>
+                <div class="ch-desc">Page views, CSAT, and support tickets are blind to AI consumption. What you should measure instead.</div>
+            </div>
+        </div>
+
+        <div class="part-label">Part II — The Experiment</div>
+        <h2>Two control APIs. Four formats. Four models.</h2>
+
+        <p>Popular APIs are all over the training data, so any test you run with them is contaminated. We built two APIs from scratch, documented each in four formats, and ran over 21,000 integration tests.</p>
+
+        <div class="chapter-list">
+            <div class="chapter-item">
+                <div class="ch-num">CHAPTER 4</div>
+                <div class="ch-title">Building a Fair Test</div>
+                <div class="ch-desc">Why we built APIs from scratch. The contamination problem and how control APIs solve it.</div>
+            </div>
+            <div class="chapter-item">
+                <div class="ch-num">CHAPTER 5</div>
+                <div class="ch-title">The Models</div>
+                <div class="ch-desc">From 3.8B parameter models you can run on a laptop to frontier cloud APIs. Why we chose these four.</div>
+            </div>
+            <div class="chapter-item">
+                <div class="ch-num">CHAPTER 6</div>
+                <div class="ch-title">The Results</div>
+                <div class="ch-desc">Pass rates, code patterns, and the variance finding. Documentation format explained over 10x more variance in generated code than model choice.</div>
+            </div>
+            <div class="chapter-item">
+                <div class="ch-num">CHAPTER 7</div>
+                <div class="ch-title">The Four Formats</div>
+                <div class="ch-desc">YAML, OpenAPI 3.0, DON, and Markdown tested head to head. How each performed and why.</div>
+            </div>
+            <div class="chapter-item">
+                <div class="ch-num">CHAPTER 8</div>
+                <div class="ch-title">DON: A New Kind of Documentation</div>
+                <div class="ch-desc">A novel format that controlled AI code patterns 100% of the time on cloud models. Documentation as a code quality control mechanism.</div>
+            </div>
+        </div>
+
+        <div class="part-label">Part III — The Practical Framework</div>
+        <h2>What to do with the findings</h2>
+
+        <p>Research is only useful if you can act on it. This section gives you a decision framework, a testing methodology, and optimization techniques you can apply to your own documentation.</p>
+
+        <div class="chapter-list">
+            <div class="chapter-item">
+                <div class="ch-num">CHAPTER 9</div>
+                <div class="ch-title">Choosing Your Format</div>
+                <div class="ch-desc">The decision framework for your team, your use case, and your audience.</div>
+            </div>
+            <div class="chapter-item">
+                <div class="ch-num">CHAPTER 10</div>
+                <div class="ch-title">Building AI Acceptance Tests</div>
+                <div class="ch-desc">Set up a testing pipeline in an afternoon. Test whether AI can actually use your docs to write working code.</div>
+            </div>
+            <div class="chapter-item">
+                <div class="ch-num">CHAPTER 11</div>
+                <div class="ch-title">Token Optimization Techniques</div>
+                <div class="ch-desc">Reduce your documentation's token cost without rewriting everything.</div>
+            </div>
+            <div class="chapter-item">
+                <div class="ch-num">CHAPTER 12</div>
+                <div class="ch-title">Serving Docs to AI</div>
+                <div class="ch-desc">How to deliver documentation for AI consumption. llms.txt, format selection, and delivery strategies.</div>
+            </div>
+        </div>
+
+        <div class="part-label">Looking Ahead</div>
+        <h2>What we know and what we don't</h2>
+
+        <div class="chapter-list">
+            <div class="chapter-item">
+                <div class="ch-num">CHAPTER 13</div>
+                <div class="ch-title">What the Data Shows</div>
+                <div class="ch-desc">The complete findings, consolidated into a single reference.</div>
+            </div>
+            <div class="chapter-item">
+                <div class="ch-num">CHAPTER 14</div>
+                <div class="ch-title">What We Don't Know Yet</div>
+                <div class="ch-desc">Open questions, limitations of the research, and where the data stops.</div>
+            </div>
+            <div class="chapter-item">
+                <div class="ch-num">CHAPTER 15</div>
+                <div class="ch-title">What Comes Next</div>
+                <div class="ch-desc">Where documentation and AI are heading.</div>
+            </div>
+        </div>
+
+        <p style="margin-top: 1.5rem;">The book also includes five appendices: the complete test methodology, all four format specifications, the DON specification, full results tables, and a verified claims reference.</p>
+
+        <h2>Who it's for</h2>
+
+        <p>If you write API documentation, this book shows you how your format choices affect what AI tools produce. If you manage a docs team, it gives you a testing methodology and a decision framework. If you run an API platform, it explains a cost your customers are paying that you've never measured.</p>
+
+        <div class="article-cta">
+            <p><strong>Get the book:</strong></p>
+            <p><a href="https://leanpub.com/tokensnotjokin" target="_blank" rel="noopener">Tokens Not Jokin' on Leanpub →</a></p>
+            <p><a href="https://doc-cost.vercel.app/" target="_blank" rel="noopener">Try the free Docs Cost Calculator →</a></p>
+        </div>
+    </div>
+</article>
+
+<footer class="blog-footer">
+    <div class="container">
+        <p>© 2026 <a href="https://grzeti.ch" target="_blank" rel="noopener">Ed Grzetich</a> · <a href="/">Tokens Not Jokin'</a></p>
+    </div>
+</footer>
+
+<script defer src="/_vercel/insights/script.js"></script>
+</body>
+</html>
