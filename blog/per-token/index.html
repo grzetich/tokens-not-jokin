@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Per-Token Pricing Changes the Documentation Format Conversation — Tokens Not Jokin'</title>
+    <meta name="description" content="When every token is billed, the format of your API docs stops being an efficiency question and becomes a cost question.">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Per-Token Pricing Changes the Documentation Format Conversation">
+    <meta property="og:description" content="When every token is billed, the format of your API docs stops being an efficiency question and becomes a cost question.">
+    <meta property="og:url" content="https://tokensnotjokin.com/blog/per-token-pricing">
+    <meta property="og:image" content="https://tokensnotjokin.com/og-blog-per-token.png">
+    <meta property="og:site_name" content="Tokens Not Jokin'">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Per-Token Pricing Changes the Documentation Format Conversation">
+    <meta name="twitter:description" content="When every token is billed, the format of your API docs stops being an efficiency question and becomes a cost question.">
+    <meta name="twitter:image" content="https://tokensnotjokin.com/og-blog-per-token.png">
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="canonical" href="https://tokensnotjokin.com/blog/per-token-pricing">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --ink: #0a0a0a;
+            --paper: #f6f1eb;
+            --cream: #ede6dc;
+            --accent: #c44b1a;
+            --accent-light: #e8693a;
+            --muted: #7a7168;
+            --rule: #c9bfb3;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html {
+            font-size: 18px;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--paper);
+            color: var(--ink);
+            line-height: 1.65;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        .blog-nav {
+            padding: 1.5rem 0;
+            border-bottom: 1px solid var(--rule);
+        }
+
+        .blog-nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .blog-nav a {
+            color: var(--ink);
+            text-decoration: none;
+        }
+
+        .blog-nav .site-name {
+            font-family: 'Instrument Serif', serif;
+            font-size: 1.2rem;
+        }
+
+        .blog-nav .back-link {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.75rem;
+            letter-spacing: 0.05em;
+            color: var(--muted);
+            transition: color 0.2s;
+        }
+
+        .blog-nav .back-link:hover {
+            color: var(--accent);
+        }
+
+        .container {
+            max-width: 680px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        article {
+            padding: 3rem 0 4rem;
+        }
+
+        .article-meta {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.7rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 1rem;
+        }
+
+        article h1 {
+            font-family: 'Instrument Serif', serif;
+            font-size: 2.4rem;
+            font-weight: 400;
+            line-height: 1.15;
+            margin-bottom: 1.5rem;
+            max-width: 580px;
+        }
+
+        .article-lede {
+            font-size: 1.15rem;
+            color: var(--muted);
+            line-height: 1.6;
+            margin-bottom: 2.5rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--rule);
+        }
+
+        article h2 {
+            font-family: 'Instrument Serif', serif;
+            font-size: 1.5rem;
+            font-weight: 400;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        article p {
+            margin-bottom: 1.25rem;
+        }
+
+        article strong {
+            font-weight: 700;
+        }
+
+        article a {
+            color: var(--accent);
+            text-decoration: underline;
+            text-underline-offset: 2px;
+        }
+
+        article a:hover {
+            color: var(--accent-light);
+        }
+
+        article em {
+            font-style: italic;
+        }
+
+        .article-cta {
+            margin-top: 3rem;
+            padding: 2rem;
+            background: var(--cream);
+            border-radius: 6px;
+            border-left: 3px solid var(--accent);
+        }
+
+        .article-cta p {
+            margin-bottom: 0.75rem;
+        }
+
+        .article-cta p:last-child {
+            margin-bottom: 0;
+        }
+
+        .article-cta a {
+            color: var(--accent);
+            font-weight: 500;
+        }
+
+        .blog-footer {
+            padding: 2rem 0;
+            border-top: 1px solid var(--rule);
+            text-align: center;
+        }
+
+        .blog-footer p {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.7rem;
+            color: var(--muted);
+        }
+
+        .blog-footer a {
+            color: var(--muted);
+            text-decoration: none;
+        }
+
+        .blog-footer a:hover {
+            color: var(--accent);
+        }
+
+        @media (max-width: 600px) {
+            html { font-size: 16px; }
+            article h1 { font-size: 1.9rem; }
+            article h2 { font-size: 1.3rem; }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="blog-nav">
+    <div class="container">
+        <a href="/" class="site-name">Tokens Not Jokin'</a>
+        <a href="/" class="back-link">← Back to book</a>
+    </div>
+</nav>
+
+<article>
+    <div class="container">
+        <div class="article-meta">April 16, 2026 · Ed Grzetich</div>
+        <h1>Per-Token Pricing Changes the Documentation Format Conversation</h1>
+        <p class="article-lede">When every token is billed at API rates, the format of your API documentation stops being an efficiency question and becomes a cost question.</p>
+
+        <h2>What changed</h2>
+
+        <p>Anthropic updated its enterprise plan. The seat fee now covers platform access only. Every token used across Claude, Claude Code, and Cowork is billed separately at standard API rates. From <a href="https://support.claude.com/en/articles/9797531-what-is-the-enterprise-plan" target="_blank" rel="noopener">Anthropic's enterprise help center</a>: "Usage isn't included in the seat fee. Every token your team uses, in chat, Claude Code, or Cowork, is billed at standard API rates on top of your seat cost."</p>
+
+        <p>Organizations on older seat-based plans with fixed usage allowances keep their current terms until their next contract renewal. After that, they migrate to usage-based billing.</p>
+
+        <p>Anthropic isn't alone in this. <a href="https://help.openai.com/en/articles/20001106-codex-rate-card" target="_blank" rel="noopener">OpenAI shifted Codex from flat-message pricing to token metering on April 2</a>. <a href="https://github.blog/changelog/2026-04-10-enforcing-new-limits-and-retiring-opus-4-6-fast-from-copilot-pro/" target="_blank" rel="noopener">GitHub tightened Copilot limits on April 10</a>. The direction is consistent across the industry: flat-fee subscriptions for AI coding tools are giving way to usage-based billing.</p>
+
+        <h2>Why this matters for documentation</h2>
+
+        <p>Under flat-fee pricing, a verbose API spec cost the same as a compact one. The tokens were consumed either way, but nobody saw them on a bill. The cost was real, it consumed context window space and competed for the model's attention, but it was invisible to Accounts Payable.</p>
+
+        <p>Under per-token pricing, those tokens have a price. Every time a developer uses an AI coding tool with your API documentation, the format of that documentation determines how many tokens get billed. A verbose format doesn't just waste context. It costs more money, and now there's a line item to prove it.</p>
+
+        <h2>What the data shows</h2>
+
+        <p>In the research for <em>Tokens Not Jokin'</em>, we documented the same APIs in four formats and measured the token cost of each. The differences were not small.</p>
+
+        <p>YAML described the same API information using roughly 80% fewer tokens than OpenAPI 3.0. For a 10-endpoint API, that was 2,007 tokens versus 7,534 tokens. Same endpoints, same parameters, same constraints. The only difference was how the information was structured.</p>
+
+        <p>Under flat-fee pricing, that's an interesting efficiency finding. Under per-token pricing, it's arithmetic. At $3 per million input tokens and 100,000 requests per month, the difference between YAML and OpenAPI is roughly $8,000 per year, per API. That cost is paid by your customers, the developers whose AI tools read your docs when they generate code.</p>
+
+        <h2>The compounding effect</h2>
+
+        <p>Developers don't use one API. A typical SaaS application might reference documentation for authentication, a database, payment processing, email, storage, and an internal API. That's six sets of documentation competing for context space in every coding session.</p>
+
+        <p>With YAML, six APIs consume about 8,000 tokens, roughly 6% of a 128K context window. With OpenAPI, the same six APIs consume about 30,000 tokens, nearly a quarter of the window. Under flat-fee pricing, that difference was invisible. Under per-token pricing, it shows up every month.</p>
+
+        <p>And the API documentation format isn't just about cost. The research showed that format affects more than token count. On smaller models, a 3.8B parameter model achieved 100% pass rates with YAML and 0% with OpenAPI on a complex API. The verbose format didn't just cost more. It broke the model entirely.</p>
+
+        <h2>What documentation teams should consider</h2>
+
+        <p>If your API documentation is in OpenAPI format and your customers use AI coding tools (and they do, 72% of developers reported using AI tools in 2024), the billing shift means your format choice now has a direct cost implication for the people using your API.</p>
+
+        <p>They probably won't trace the expense back to your documentation. Token costs are aggregated across everything the model processes in a session. But the cost is real, and it compounds across every request, every developer, every day. And now, it's visible to your customers in a very important way: their bottom line.</p>
+
+        <p>A YAML version of your API documentation uses fewer tokens, produces equivalent or better code generation results, and now costs your customers less money per interaction.</p>
+
+        <p>The research behind these numbers, including the full methodology, pass rates across four models, and the format comparison data, is in <em>Tokens Not Jokin'</em>.</p>
+
+        <div class="article-cta">
+            <p><strong>Get the full research:</strong></p>
+            <p><a href="https://leanpub.com/tokensnotjokin" target="_blank" rel="noopener">Tokens Not Jokin' on Leanpub →</a></p>
+            <p><a href="https://doc-cost.vercel.app/" target="_blank" rel="noopener">See what your docs cost with the free calculator →</a></p>
+        </div>
+    </div>
+</article>
+
+<footer class="blog-footer">
+    <div class="container">
+        <p>© 2026 <a href="https://grzeti.ch" target="_blank" rel="noopener">Ed Grzetich</a> · <a href="/">Tokens Not Jokin'</a></p>
+    </div>
+</footer>
+
+<script defer src="/_vercel/insights/script.js"></script>
+</body>
+</html>
