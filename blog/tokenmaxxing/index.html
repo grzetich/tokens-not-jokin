@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tokenmaxxing Is Visible. Doc Format Waste Isn't. — Tokens Not Jokin'</title>
+    <meta name="description" content="Companies are tracking how many tokens developers burn. Nobody is tracking how many tokens the documentation burns before the developer even starts.">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Tokenmaxxing Is Visible. Doc Format Waste Isn't.">
+    <meta property="og:description" content="Companies are tracking how many tokens developers burn. Nobody is tracking how many tokens the documentation burns before the developer even starts.">
+    <meta property="og:url" content="https://tokensnotjokin.com/blog/tokenmaxxing">
+    <meta property="og:image" content="https://tokensnotjokin.com/og-blog-tokenmaxxing.png">
+    <meta property="og:site_name" content="Tokens Not Jokin'">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Tokenmaxxing Is Visible. Doc Format Waste Isn't.">
+    <meta name="twitter:description" content="Companies are tracking how many tokens developers burn. Nobody is tracking how many tokens the documentation burns before the developer even starts.">
+    <meta name="twitter:image" content="https://tokensnotjokin.com/og-blog-tokenmaxxing.png">
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="canonical" href="https://tokensnotjokin.com/blog/tokenmaxxing">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --ink: #0a0a0a;
+            --paper: #f6f1eb;
+            --cream: #ede6dc;
+            --accent: #c44b1a;
+            --accent-light: #e8693a;
+            --muted: #7a7168;
+            --rule: #c9bfb3;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html {
+            font-size: 18px;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--paper);
+            color: var(--ink);
+            line-height: 1.65;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        .blog-nav {
+            padding: 1.5rem 0;
+            border-bottom: 1px solid var(--rule);
+        }
+
+        .blog-nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .blog-nav a {
+            color: var(--ink);
+            text-decoration: none;
+        }
+
+        .blog-nav .site-name {
+            font-family: 'Instrument Serif', serif;
+            font-size: 1.2rem;
+        }
+
+        .blog-nav .back-link {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.75rem;
+            letter-spacing: 0.05em;
+            color: var(--muted);
+            transition: color 0.2s;
+        }
+
+        .blog-nav .back-link:hover {
+            color: var(--accent);
+        }
+
+        .container {
+            max-width: 680px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        article {
+            padding: 3rem 0 4rem;
+        }
+
+        .article-meta {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.7rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 1rem;
+        }
+
+        article h1 {
+            font-family: 'Instrument Serif', serif;
+            font-size: 2.4rem;
+            font-weight: 400;
+            line-height: 1.15;
+            margin-bottom: 1.5rem;
+            max-width: 580px;
+        }
+
+        .article-lede {
+            font-size: 1.15rem;
+            color: var(--muted);
+            line-height: 1.6;
+            margin-bottom: 2.5rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--rule);
+        }
+
+        article h2 {
+            font-family: 'Instrument Serif', serif;
+            font-size: 1.5rem;
+            font-weight: 400;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        article p {
+            margin-bottom: 1.25rem;
+        }
+
+        article strong {
+            font-weight: 700;
+        }
+
+        article a {
+            color: var(--accent);
+            text-decoration: underline;
+            text-underline-offset: 2px;
+        }
+
+        article a:hover {
+            color: var(--accent-light);
+        }
+
+        article em {
+            font-style: italic;
+        }
+
+        .article-cta {
+            margin-top: 3rem;
+            padding: 2rem;
+            background: var(--cream);
+            border-radius: 6px;
+            border-left: 3px solid var(--accent);
+        }
+
+        .article-cta p {
+            margin-bottom: 0.75rem;
+        }
+
+        .article-cta p:last-child {
+            margin-bottom: 0;
+        }
+
+        .article-cta a {
+            color: var(--accent);
+            font-weight: 500;
+        }
+
+        .blog-footer {
+            padding: 2rem 0;
+            border-top: 1px solid var(--rule);
+            text-align: center;
+        }
+
+        .blog-footer p {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.7rem;
+            color: var(--muted);
+        }
+
+        .blog-footer a {
+            color: var(--muted);
+            text-decoration: none;
+        }
+
+        .blog-footer a:hover {
+            color: var(--accent);
+        }
+
+        @media (max-width: 600px) {
+            html { font-size: 16px; }
+            article h1 { font-size: 1.9rem; }
+            article h2 { font-size: 1.3rem; }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="blog-nav">
+    <div class="container">
+        <a href="/" class="site-name">Tokens Not Jokin'</a>
+        <a href="/" class="back-link">← Back to book</a>
+    </div>
+</nav>
+
+<article>
+    <div class="container">
+        <div class="article-meta">April 29, 2026 · Ed Grzetich</div>
+        <h1>Tokenmaxxing Is Visible. Doc Format Waste Isn't.</h1>
+        <p class="article-lede">Companies are building leaderboards to track how many tokens their developers burn. Nobody is tracking how many tokens the documentation burns before the developer even starts.</p>
+
+        <h2>The tokenmaxxing problem</h2>
+
+        <p>Gergely Orosz reported last week in <a href="https://newsletter.pragmaticengineer.com/p/the-pulse-tokenmaxxing-as-a-weird-6b2" target="_blank" rel="noopener">The Pragmatic Engineer</a> that developers at Meta, Microsoft, and Salesforce are deliberately burning tokens to inflate their AI usage metrics. Meta employees used 60.2 trillion tokens in 30 days. Salesforce set minimum spend targets of $100/month on Claude Code and $70/month on Cursor. Microsoft developers admitted to prompting throwaway projects and asking AI questions they could answer faster by reading the docs.</p>
+
+        <p>The industry reaction has been predictable: this is wasteful, this is gaming metrics, this is lines-of-code all over again.</p>
+
+        <p>And it's happening against a bigger backdrop. <a href="https://www.axios.com/2026/04/26/ai-cost-human-workers" target="_blank" rel="noopener">Axios reported this week</a> that AI compute costs now exceed employee costs at some companies. Nvidia's VP of applied deep learning said that for his team, compute costs are "far beyond the costs of the employees." Uber's CTO told The Information the company has already blown through its entire 2026 AI budget, largely on coding tools. Gartner projects global IT spending will hit $6.31 trillion this year, up 13.5%, driven by AI infrastructure.</p>
+
+        <p>Companies are spending more on AI than they planned, and they're starting to look hard at where those tokens go. Tokenmaxxing is the visible problem. But there's another version of unnecessary token spend that nobody is talking about, and it's not a choice anyone is making. It's baked into the documentation.</p>
+
+        <h2>The tokens nobody chose to spend</h2>
+
+        <p>Every time a developer points Claude Code or Cursor at an API, the tool reads the documentation. The format of that documentation determines how many tokens get consumed before the developer's first prompt, before a single line of code is generated, before any work happens at all.</p>
+
+        <p>In my research across 21,000+ integration tests, the same API documented in OpenAPI 3.0 consumed roughly 3.8x more tokens than the same information in YAML. For a 10-endpoint API, that's 7,534 tokens versus 2,007. Same endpoints, same parameters, same information. The difference is pure format overhead.</p>
+
+        <p>A developer using Claude Code against an OpenAPI spec isn't tokenmaxxing. They're just using the docs their API provider published. The extra 5,500 tokens per session aren't a choice. That's not maxxing, that's taxing.</p>
+
+        <h2>Scale the math</h2>
+
+        <p>Meta has 85,000 employees on AI tools. If even a fraction of them work with APIs documented in verbose formats, the documentation overhead adds up fast. Not as fast as deliberately prompting throwaway projects, but it compounds in a way that intentional waste doesn't: it happens on every single API interaction, automatically, without anyone noticing.</p>
+
+        <p>Salesforce is tracking individual developer spend down to 15-minute intervals. They have minimum targets and team dashboards. But the token cost of the documentation format those developers consume isn't on any dashboard. It's invisible spending that looks like normal usage.</p>
+
+        <p>A developer integrating five APIs in a coding session, each documented in OpenAPI, might burn 30,000+ tokens on documentation alone. Switch those specs to YAML and the same session uses about 8,000 documentation tokens. The developer didn't change their behavior. The documentation team changed the format.</p>
+
+        <h2>Two kinds of waste</h2>
+
+        <p>Tokenmaxxing is visible waste. Developers choose to burn tokens on throwaway projects. It shows up on leaderboards. It gets reported in newsletters. Companies can shut it down by removing the leaderboard, which is what Meta did.</p>
+
+        <p>Documentation format overhead is invisible waste. Nobody chose it. Nobody tracks it. Nobody knows it's there. And removing a leaderboard doesn't fix it, because it was never on a leaderboard to begin with.</p>
+
+        <p>Companies worried about AI spend are looking at the wrong side of the equation. Developer behavior is one input. Documentation format is another. Our data shows format explains over 10x more variance in AI code generation outcomes than model choice. The documentation author's format decisions affect every developer who touches that API, every session, every day.</p>
+
+        <h2>What can be done about it</h2>
+
+        <p>If your company tracks AI token spend, you can measure this. Take an API your developers use frequently. Tokenize the documentation in its current format. Then tokenize the same information in another format, like YAML. The difference is what your team spends on format overhead, per interaction, multiplied by every developer and every session.</p>
+
+        <p>You can try this right now with the <a href="https://doc-cost.vercel.app/" target="_blank" rel="noopener">Docs Cost Calculator</a>. Paste your API spec, choose a model, and see the token cost across formats.</p>
+
+        <p>The tokenmaxxing conversation is about developers wasting tokens on purpose. The format conversation is about wasting tokens by default. One of those problems goes away when you remove the incentive. The other one is still there, in every API spec, in every coding session, on every team.</p>
+
+        <div class="article-cta">
+            <p><strong>The research behind the format numbers:</strong></p>
+            <p><a href="https://leanpub.com/tokensnotjokin" target="_blank" rel="noopener">Tokens Not Jokin' on Leanpub →</a></p>
+            <p><a href="https://doc-cost.vercel.app/" target="_blank" rel="noopener">Try the free Docs Cost Calculator →</a></p>
+        </div>
+    </div>
+</article>
+
+<footer class="blog-footer">
+    <div class="container">
+        <p>© 2026 <a href="https://grzeti.ch" target="_blank" rel="noopener">Ed Grzetich</a> · <a href="/">Tokens Not Jokin'</a></p>
+    </div>
+</footer>
+
+<script defer src="/_vercel/insights/script.js"></script>
+</body>
+</html>
