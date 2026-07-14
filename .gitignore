@@ -1,0 +1,4 @@
+# Windows NTFS alternate-data-stream artifacts (Mark of the Web).
+# The colon is an invalid filename character on Windows, so committing one of
+# these makes the branch impossible to check out on any Windows clone.
+*:Zone.Identifier
